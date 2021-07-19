@@ -8,7 +8,9 @@ export var gravity = -40
 export var jump_impulse = 20
 export var mouse_sensitivity = .1
 export var controller_sensitivity = 3
-export var rot_speed = 30
+export var rot_speed = 5
+
+export (int, 0, 10) var push = 1
 
 var velocity = Vector3.ZERO
 var snap_vector = Vector3.ZERO
@@ -44,7 +46,11 @@ func _physics_process(delta):
 	jump()
 	apply_controller_rotation()
 	spring_arm.rotation.x = clamp(spring_arm.rotation.x, deg2rad(-75), deg2rad(75))
-	velocity = move_and_slide_with_snap(velocity, snap_vector, Vector3.UP, true)
+	velocity = move_and_slide_with_snap(velocity, snap_vector, Vector3.UP, true, 4, 0.785398, false)
+	for idx in get_slide_count():
+		var collision = get_slide_collision(idx)
+		if collision.collider.is_in_group("bodies"):
+			collision.collider.apply_central_impulse(-collision.normal * velocity.length() * push)
 	
 	
 func get_input_vector():
@@ -99,6 +105,7 @@ func apply_controller_rotation():
 	if InputEventJoypadMotion:
 		rotate_y(deg2rad(-axis_vector.x) * controller_sensitivity)
 		spring_arm.rotate_x(deg2rad(-axis_vector.y) * controller_sensitivity)
+		
 
 
 

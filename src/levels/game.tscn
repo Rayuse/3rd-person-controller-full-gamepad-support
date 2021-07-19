@@ -1,41 +1,482 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/levels/game.gd" type="Script" id=2]
 [ext_resource path="res://assets/prototype_textures/Vector/texture_01.svg" type="Texture" id=3]
 [ext_resource path="res://assets/prototype_textures/PNG/Green/texture_01.png" type="Texture" id=4]
 [ext_resource path="res://assets/prototype_textures/PNG/Orange/texture_01.png" type="Texture" id=5]
 
-[sub_resource type="SpatialMaterial" id=1]
-albedo_texture = ExtResource( 4 )
-uv1_triplanar = true
+[sub_resource type="ProceduralSky" id=1]
 
-[sub_resource type="SpatialMaterial" id=2]
-albedo_texture = ExtResource( 3 )
-uv1_triplanar = true
-
-[sub_resource type="ProceduralSky" id=3]
-
-[sub_resource type="Environment" id=4]
+[sub_resource type="Environment" id=2]
 background_mode = 2
-background_sky = SubResource( 3 )
+background_sky = SubResource( 1 )
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 5 )
 uv1_triplanar = true
 
-[sub_resource type="CubeMesh" id=6]
-material = SubResource( 5 )
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 3 )
 
-[sub_resource type="ConvexPolygonShape" id=7]
+[sub_resource type="ConvexPolygonShape" id=5]
 points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
 
+[sub_resource type="SpatialMaterial" id=7]
+albedo_texture = ExtResource( 4 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_texture = ExtResource( 3 )
+uv1_triplanar = true
+
 [node name="Game" type="Node"]
-script = ExtResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 13, 8 )
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="Boxes" type="Node" parent="."]
+
+[node name="RigidBody" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody2" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody3" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody4" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 2, -3 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody5" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 4, -3 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody6" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 6, -3 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody7" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 2, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody8" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 4, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody9" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 6, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody10" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody11" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody12" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 6, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody12"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody12"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody13" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 2, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody13"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody13"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody14" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody14"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody14"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody15" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 6, -32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody15"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody15"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody16" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 2, 13 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody16"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody16"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody17" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4, 13 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody17"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody17"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody18" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 6, 13 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody18"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody18"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody19" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 18.7, 32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody19"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody19"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody20" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 20.7, 32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody20"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody20"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody21" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 22.7, 32 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody21"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody21"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody22" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 18.7, -36 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody22"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody22"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody23" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 20.7, -36 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody23"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody23"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
+
+[node name="RigidBody24" type="RigidBody" parent="Boxes" groups=[
+"bodies",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 22.7, -36 )
+collision_layer = 8
+collision_mask = 15
+continuous_cd = true
+sleeping = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody24"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody24"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+shape = SubResource( 5 )
 
 [node name="Platforms" type="CSGCombiner" parent="."]
-material_override = SubResource( 1 )
+material_override = SubResource( 7 )
 use_collision = true
+collision_layer = 4
+collision_mask = 0
 
 [node name="CSGPolygon" type="CSGPolygon" parent="Platforms"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40, 0.362461, 26.226 )
@@ -188,12 +629,14 @@ operation = 2
 radius = 3.913
 
 [node name="Walls" type="CSGCombiner" parent="."]
-material_override = SubResource( 2 )
+material_override = SubResource( 8 )
 use_collision = true
+collision_layer = 4
+collision_mask = 8
 
 [node name="CSGBox" type="CSGBox" parent="Walls"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.368918, 0 )
 width = 100.0
-height = 1.0
 depth = 100.0
 
 [node name="CSGBox2" type="CSGBox" parent="Walls"]
@@ -220,350 +663,7 @@ width = 100.0
 height = 1.0
 depth = 100.0
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 13, 8 )
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 4 )
-
-[node name="Boxes" type="Node" parent="."]
-
-[node name="RigidBody" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody2" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody3" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody4" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 2, -3 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody5" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 4, -3 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody6" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 6, -3 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody6"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody6"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody7" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 2, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody7"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody7"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody8" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 4, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody8"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody8"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody9" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 6, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody9"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody9"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody10" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody10"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody10"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody11" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody11"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody11"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody12" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 6, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody12"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody12"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody13" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 2, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody13"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody13"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody14" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody14"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody14"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody15" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 6, -32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody15"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody15"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody16" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 2, 13 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody16"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody16"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody17" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 4, 13 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody17"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody17"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody18" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 6, 13 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody18"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody18"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody19" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 18.7, 32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody19"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody19"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody20" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 20.7, 32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody20"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody20"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody21" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 22.7, 32 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody21"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody21"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody22" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 18.7, -36 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody22"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody22"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody23" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 20.7, -36 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody23"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody23"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="RigidBody24" type="RigidBody" parent="Boxes"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 22.7, -36 )
-continuous_cd = true
-sleeping = true
-
-[node name="MeshInstance" type="MeshInstance" parent="Boxes/RigidBody24"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-mesh = SubResource( 6 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Boxes/RigidBody24"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
-shape = SubResource( 7 )
-
-[node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.8018 )
+[node name="Player" parent="Walls" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.41592, 13.8018 )
+collision_mask = 15
+rot_speed = 10
