@@ -21,11 +21,11 @@ material = SubResource( 3 )
 [sub_resource type="ConvexPolygonShape" id=5]
 points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_texture = ExtResource( 4 )
 uv1_triplanar = true
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=7]
 albedo_texture = ExtResource( 3 )
 uv1_triplanar = true
 
@@ -473,7 +473,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
 shape = SubResource( 5 )
 
 [node name="Platforms" type="CSGCombiner" parent="."]
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 use_collision = true
 collision_layer = 4
 collision_mask = 0
@@ -629,7 +629,7 @@ operation = 2
 radius = 3.913
 
 [node name="Walls" type="CSGCombiner" parent="."]
-material_override = SubResource( 8 )
+material_override = SubResource( 7 )
 use_collision = true
 collision_layer = 4
 collision_mask = 8
@@ -663,7 +663,7 @@ width = 100.0
 height = 1.0
 depth = 100.0
 
-[node name="Player" parent="Walls" instance=ExtResource( 1 )]
+[node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.41592, 13.8018 )
 collision_mask = 15
 rot_speed = 10

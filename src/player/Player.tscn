@@ -43,6 +43,7 @@ shape = SubResource( 5 )
 
 [node name="SpringArm" type="SpringArm" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.951476, 0.307722, 0, -0.307722, 0.951476, 0, 2.4, 0 )
+collision_mask = 4
 spring_length = 6.0
 
 [node name="Camera" type="Camera" parent="SpringArm"]
