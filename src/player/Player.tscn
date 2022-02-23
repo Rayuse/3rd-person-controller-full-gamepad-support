@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://src/player/Player.gd" type="Script" id=1]
+[ext_resource path="res://src/player/player.gd" type="Script" id=1]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.141176, 0.835294, 0.92549, 1 )
@@ -45,6 +45,7 @@ shape = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 0.951476, 0.307722, 0, -0.307722, 0.951476, 0, 2.4, 0 )
 collision_mask = 4
 spring_length = 6.0
+margin = 0.2
 
 [node name="Camera" type="Camera" parent="SpringArm"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.00907 )

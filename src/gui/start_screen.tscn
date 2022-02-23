@@ -1,0 +1,279 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://src/gui/start_screen.gd" type="Script" id=1]
+[ext_resource path="res://src/gui/default.theme" type="Theme" id=2]
+[ext_resource path="res://assets/prototype_textures/PNG/Green/texture_01.png" type="Texture" id=3]
+[ext_resource path="res://assets/prototype_textures/PNG/Dark/texture_01.png" type="Texture" id=4]
+[ext_resource path="res://assets/prototype_textures/PNG/Orange/texture_01.png" type="Texture" id=5]
+[ext_resource path="res://assets/prototype_textures/PNG/Purple/texture_01.png" type="Texture" id=6]
+[ext_resource path="res://src/gui/settings_menu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/gui/main_menu.tres" type="DynamicFont" id=8]
+[ext_resource path="res://assets/fonts/Lato-Regular.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://src/gui/fps_label.gd" type="Script" id=10]
+[ext_resource path="res://src/levels/world_environment.tscn" type="PackedScene" id=11]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.694118, 0.0745098, 0.0745098, 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 4 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 3 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 5 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 6 )
+uv1_triplanar = true
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+content_margin_left = 6.0
+content_margin_right = 6.0
+bg_color = Color( 0.996078, 0.768627, 0, 1 )
+
+[sub_resource type="Animation" id=8]
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background/ViewportContainer/Viewport/Camera:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4, 6, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 3, 0.034 ), Vector3( 0, 2.5, 0.034 ), Vector3( -0.5, 2.5, 0.034 ), Vector3( 0, 2.5, 0.034 ), Vector3( 0, 3, 0.034 ) ]
+}
+
+[node name="StartScreen" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Background" type="Spatial" parent="."]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="Background/ViewportContainer"]
+size = Vector2( 1280, 720 )
+handle_input_locally = false
+msaa = 2
+render_target_update_mode = 3
+
+[node name="Camera" type="Camera" parent="Background/ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, 0.988196, 0.153193, 0, -0.153193, 0.988196, 0, 3, 0.034 )
+current = true
+
+[node name="Level" type="CSGCombiner" parent="Background"]
+
+[node name="WallsAndFloor" type="CSGCombiner" parent="Background/Level"]
+material_override = SubResource( 1 )
+
+[node name="Floor" type="CSGBox" parent="Background/Level/WallsAndFloor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.19176 )
+width = 20.0
+height = 0.1
+depth = 20.0
+material = SubResource( 2 )
+
+[node name="Wall" type="CSGBox" parent="Background/Level/WallsAndFloor"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6.06135, -14.1531 )
+width = 20.0
+height = 0.1
+depth = 12.1247
+material = SubResource( 3 )
+
+[node name="Wall2" type="CSGBox" parent="Background/Level/WallsAndFloor"]
+transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -9.77744, 5.86845, -4.63139 )
+width = 20.0
+height = 0.1
+depth = 12.1247
+material = SubResource( 3 )
+
+[node name="Wall3" type="CSGBox" parent="Background/Level/WallsAndFloor"]
+transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 9.89967, 5.86845, -4.63139 )
+width = 20.0
+height = 0.1
+depth = 12.1247
+material = SubResource( 3 )
+
+[node name="Obstacles" type="CSGCombiner" parent="Background/Level"]
+calculate_tangents = false
+
+[node name="CSGBox" type="CSGBox" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93763, 0.5, -6.61195 )
+width = 1.0
+height = 1.0
+depth = 1.0
+material = SubResource( 4 )
+
+[node name="CSGBox7" type="CSGBox" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.93763, 0.5, -4.61457 )
+width = 1.0
+height = 1.0
+depth = 1.0
+material = SubResource( 4 )
+
+[node name="CSGBox2" type="CSGBox" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.668553, 0.5, -11.5279 )
+width = 1.0
+height = 1.0
+depth = 1.0
+material = SubResource( 4 )
+
+[node name="CSGBox5" type="CSGBox" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5787, 0.5, -8.46302 )
+width = 1.0
+height = 1.0
+depth = 1.0
+material = SubResource( 4 )
+
+[node name="CSGBox6" type="CSGBox" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5787, 0.5, -6.33399 )
+width = 1.0
+height = 1.0
+depth = 1.0
+material = SubResource( 4 )
+
+[node name="CSGBox3" type="CSGBox" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.64003, 0.5, -11.5279 )
+width = 1.0
+height = 1.0
+depth = 1.0
+material = SubResource( 4 )
+
+[node name="CSGBox4" type="CSGBox" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.71776, 0.5, -11.5279 )
+width = 1.0
+height = 1.0
+depth = 1.0
+material = SubResource( 4 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="Background/Level/Obstacles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -10 )
+polygon = PoolVector2Array( 0, 0, 0, 1, 2, 0, -0.0200983, -0.0553893 )
+depth = 2.924
+material = SubResource( 5 )
+
+[node name="CSGPolygon2" type="CSGPolygon" parent="Background/Level/Obstacles"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.87446, 0, -12.8473 )
+polygon = PoolVector2Array( 0, 0, 0, 1, 2, 0, -0.0200983, -0.0553893 )
+depth = 2.924
+material = SubResource( 5 )
+
+[node name="CSGPolygon3" type="CSGPolygon" parent="Background/Level/Obstacles"]
+transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -6.09203, 0, -5.80086 )
+polygon = PoolVector2Array( 0, 0, 0, 1, 2, 0, -0.0200983, -0.0553893 )
+depth = 0.999
+material = SubResource( 5 )
+
+[node name="WorldEnvironment" parent="Background" instance=ExtResource( 11 )]
+
+[node name="FpsLabel" type="Label" parent="."]
+visible = false
+margin_right = 64.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 7 )
+custom_styles/normal = SubResource( 6 )
+text = "FPS: 60"
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+custom_constants/margin_top = 86
+custom_constants/margin_left = 68
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/MarginContainer"]
+margin_left = 68.0
+margin_top = 86.0
+margin_right = 368.0
+margin_bottom = 413.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = 8
+
+[node name="Title" type="RichTextLabel" parent="MainMenu/MarginContainer/VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 77.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/normal_font = ExtResource( 8 )
+bbcode_enabled = true
+bbcode_text = "Test [color=#fec400]Game[/color]"
+text = "Test Game"
+fit_content_height = true
+scroll_active = false
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu/MarginContainer/VBoxContainer"]
+margin_top = 85.0
+margin_right = 300.0
+margin_bottom = 171.0
+custom_constants/margin_bottom = 86
+
+[node name="StartGameBtn" type="Button" parent="MainMenu/MarginContainer/VBoxContainer"]
+margin_top = 179.0
+margin_right = 178.0
+margin_bottom = 223.0
+size_flags_horizontal = 0
+text = "Start Game"
+align = 0
+
+[node name="SettingsBtn" type="Button" parent="MainMenu/MarginContainer/VBoxContainer"]
+margin_top = 231.0
+margin_right = 127.0
+margin_bottom = 275.0
+size_flags_horizontal = 0
+text = "Settings"
+align = 0
+
+[node name="ExitBtn" type="Button" parent="MainMenu/MarginContainer/VBoxContainer"]
+margin_top = 283.0
+margin_right = 61.0
+margin_bottom = 327.0
+size_flags_horizontal = 0
+text = "Exit"
+align = 0
+
+[node name="SettingsMenu" parent="." instance=ExtResource( 7 )]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Camera"
+playback_speed = 0.2
+anims/Camera = SubResource( 8 )
+
+[connection signal="pressed" from="MainMenu/MarginContainer/VBoxContainer/StartGameBtn" to="." method="_on_StartGameBtn_pressed"]
+[connection signal="pressed" from="MainMenu/MarginContainer/VBoxContainer/SettingsBtn" to="." method="_on_SettingsBtn_pressed"]
+[connection signal="pressed" from="MainMenu/MarginContainer/VBoxContainer/ExitBtn" to="." method="_on_ExitBtn_pressed"]

@@ -9,32 +9,28 @@ export var jump_impulse = 20
 export var mouse_sensitivity = .1
 export var controller_sensitivity = 3
 export var rot_speed = 5
-
 export (int, 0, 10) var push = 1
+
+export (NodePath) var joystickRightPath
+onready var joystickRight : VirtualJoystick = get_node(joystickRightPath)
 
 var velocity = Vector3.ZERO
 var snap_vector = Vector3.ZERO
 
 onready var spring_arm = $SpringArm
 onready var pivot = $Pivot
+onready var camera = $SpringArm/Camera
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Globalsettings.connect("fov_updated", self, "_on_fov_updated")
+	Globalsettings.connect("mouse_sens_updated", self, "_on_mouse_sens_updated")
 	
-func _unhandled_input(event):
-	if event.is_action_pressed("click"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-	if event.is_action_pressed("toggle_mouse_captured"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotate_y(deg2rad(-event.relative.x * mouse_sensitivity))
-		spring_arm.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
-			
+#func _unhandled_input(event):	
+#	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+#		rotate_y(deg2rad(-event.relative.x * mouse_sensitivity))
+#		spring_arm.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))		
+#	pass
 
 func _physics_process(delta):
 	var input_vector = get_input_vector()
@@ -45,13 +41,19 @@ func _physics_process(delta):
 	update_snap_vector()
 	jump()
 	apply_controller_rotation()
+	rotate_player()
+
 	spring_arm.rotation.x = clamp(spring_arm.rotation.x, deg2rad(-75), deg2rad(75))
+
 	velocity = move_and_slide_with_snap(velocity, snap_vector, Vector3.UP, true, 4, 0.785398, false)
 	for idx in get_slide_count():
 		var collision = get_slide_collision(idx)
 		if collision.collider.is_in_group("bodies"):
 			collision.collider.apply_central_impulse(-collision.normal * velocity.length() * push)
 	
+func rotate_player():
+	rotate_y(deg2rad(joystickRight.get_output().x * mouse_sensitivity))
+	spring_arm.rotate_x(deg2rad(joystickRight.get_output().y * mouse_sensitivity))	
 	
 func get_input_vector():
 	var input_vector = Vector3.ZERO
@@ -77,8 +79,8 @@ func apply_friction(direction, delta):
 		if is_on_floor():
 			velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
 		else:
-			velocity.x = velocity.move_toward(direction * max_speed, air_friction * delta).x
-			velocity.z = velocity.move_toward(direction * max_speed, air_friction * delta).z
+			velocity.x = velocity.move_toward(Vector3.ZERO, air_friction * delta).x
+			velocity.z = velocity.move_toward(Vector3.ZERO, air_friction * delta).z
 		
 func apply_gravity(delta):
 	velocity.y += gravity * delta
@@ -105,6 +107,14 @@ func apply_controller_rotation():
 	if InputEventJoypadMotion:
 		rotate_y(deg2rad(-axis_vector.x) * controller_sensitivity)
 		spring_arm.rotate_x(deg2rad(-axis_vector.y) * controller_sensitivity)
+		
+		
+func _on_fov_updated(value):
+	camera.fov = value
+	
+	
+func _on_mouse_sens_updated(value):
+	mouse_sensitivity = value
 		
 
 
